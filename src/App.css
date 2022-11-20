@@ -5,8 +5,10 @@ nav{
   display:flex;
   align-items: center;
   justify-content: center;
-  padding-left:50px;
+  background-color: rgb(184, 236, 236);
+  padding-left: 10px;
 }
+
 .router{
   display:flex;
 }
@@ -24,5 +26,7 @@ li{
 ul>li:visited{
   color:gray;
 }
-
+.icon:active{
+  color: #da27e7;
+}
 

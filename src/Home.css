@@ -1,0 +1,20 @@
+.headerHome{
+    position: relative;
+    text-align: center;
+    font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif; 
+    font-style: normal;
+    font-weight: 600;
+    font-size: 42px;
+    line-height: 200%;
+}
+.short{
+    font-weight:500;
+    font-size: 21px;
+}
+.homeContainer{
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

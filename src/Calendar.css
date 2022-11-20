@@ -8,3 +8,6 @@
     font-size: 64px;
     line-height: 200%;
 }
+.calendar{
+    display: flex;
+}
