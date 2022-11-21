@@ -1,4 +1,4 @@
-import React,{ useState} from 'react';
+import React,{ useState, useEffect} from 'react';
 import './Todo.css';
 import axios from 'axios';
 
@@ -48,27 +48,27 @@ const TodoItem =(props)=>{
     <React.Fragment key={props.id}>
     
     <p style={{backgroundColor:'rgb(184, 236, 236)',width:'100vh',height:'3vh',border:'solid #1781b4',borderRadius:'5px',paddingLeft:'5px'}}>
-      {props.todo} 
-      <button onClick={removeNote} style={{position:'absolute',right:"0px",marginRight:"400px"}}>MARK COMPLETED</button>
+      {props.task} 
+      <button onClick={removeNote} style={{position:'absolute',right:"0px",marginRight:"25%"}}>MARK COMPLETED</button>
     </p>
     </React.Fragment >
   )
 }
-async function checkServer(){
-  const resp= await axios.get(`http://127.0.0.1:5000/todos`);
-  console.log(resp)
-}
-//checkServer()
+// async function getAPI(){
+//   const resp= await axios.get(`http://127.0.0.1:5000/todos`);
+//   console.log(resp)
+// }
+
 function Todo() {
   const [list,setList] = useState(null)
   const [currNote,setCurr]=useState('')
   const baseURL="http://127.0.0.1:5000/todos";
-  React.useEffect(() => {
+  useEffect(() => {
     axios.get(baseURL).then((response) => {
       setList(response.data);
-      console.log(setList)
+      console.log(list)
     });
-  }, []);
+  }, );
   const addNote=()=>{
     //add note to the api
   }
