@@ -1,5 +1,6 @@
 import React from 'react';
 import './Activitylog.css';
+import axios from 'axios';
 
 const LogList=[
   {id:0,log:"Wake up at 1000"},
@@ -26,6 +27,13 @@ const Log =(props)=>{
 }
 
 function Activitylog() {
+  const [log,setLog]=React.useState(null)
+  const baseURL="http://127.0.0.1:5000/log";
+  React.useEffect(() => {
+    axios.get(baseURL).then((response) => {
+      setLog(response.data);
+    });
+  }, []);
   return (
     <div>
       <header className='headerLog'>Activity Log</header>

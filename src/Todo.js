@@ -1,11 +1,12 @@
 import React,{ useState} from 'react';
 import './Todo.css';
+import axios from 'axios';
 
 const List=[
-  {id:0,todo:"Get some shopping"},
-  {id:1,todo:"Do the antennas assignment"},
-  {id:2,todo:"Go to the bookshop"},
-  {id:3,todo:"Pick up Mark from school"}
+  {id:0,task:"Get some shopping"},
+  {id:1,task:"Do the antennas assignment"},
+  {id:2,task:"Go to the bookshop"},
+  {id:3,task:"Pick up Mark from school"}
 ]
 const TodoForm =(props)=>{
   const handleChange =(event)=>{
@@ -40,7 +41,7 @@ const TodoList =(props)=>{
 const TodoItem =(props)=>{
   const removeNote=()=>{
     //console.log(props.id)
-    props.reFunc(props.todo)
+    props.reFunc(props.task)
     // console.log(props.notes)
   }
   return(
@@ -53,9 +54,21 @@ const TodoItem =(props)=>{
     </React.Fragment >
   )
 }
-
+async function checkServer(){
+  const resp= await axios.get(`http://127.0.0.1:5000/todos`);
+  console.log(resp)
+}
+//checkServer()
 function Todo() {
+  const [list,setList] = useState(null)
   const [currNote,setCurr]=useState('')
+  const baseURL="http://127.0.0.1:5000/todos";
+  React.useEffect(() => {
+    axios.get(baseURL).then((response) => {
+      setList(response.data);
+      console.log(setList)
+    });
+  }, []);
   const addNote=()=>{
     //add note to the api
   }
