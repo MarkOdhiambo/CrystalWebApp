@@ -2,12 +2,10 @@ import React,{ useState, useEffect} from 'react';
 import './Todo.css';
 import axios from 'axios';
 
-const List=[
-  {id:0,task:"Get some shopping"},
-  {id:1,task:"Do the antennas assignment"},
-  {id:2,task:"Go to the bookshop"},
-  {id:3,task:"Pick up Mark from school"}
-]
+const baseURL="http://127.0.0.1:5000/todos";
+const client = axios.create({
+  baseURL: "http://127.0.0.1:5000/todos" 
+});
 const TodoForm =(props)=>{
   const handleChange =(event)=>{
     props.curr(event.target.value)
@@ -29,25 +27,36 @@ const TodoForm =(props)=>{
     </form>
   )
 }
+async function makePostRequest(path, queryObj) {
+  axios.post(path, queryObj).then(
+      (response) => {
+          var result = response.data;
+          console.log(result);
+      },
+      (error) => {
+          console.log(error);
+      }
+  );
+}
+
 
 const TodoList =(props)=>{
  
   return(
     <div style={{marginLeft:'50px',marginTop:'40px'}}>
-      {props.list.map(todo=><TodoItem {...todo} reFunc={props.handleDelete}/>)}
+      {props.list.map(todo=><TodoItem {...todo} reFunc={props.handleDelete} key={todo.id}/>)}
     </div>
   )
 }
 const TodoItem =(props)=>{
-  const removeNote=()=>{
-    //console.log(props.id)
-    props.reFunc(props.task)
-    // console.log(props.notes)
+  async function removeNote(){
+    await client.delete(`/${props.id}`);
+    console.log('task deletes');
   }
   return(
-    <React.Fragment key={props.id}>
+    <React.Fragment>
     
-    <p style={{backgroundColor:'rgb(184, 236, 236)',width:'100vh',height:'3vh',border:'solid #1781b4',borderRadius:'5px',paddingLeft:'5px'}}>
+    <p key={props.id} style={{backgroundColor:'rgb(184, 236, 236)',width:'100vh',height:'3vh',border:'solid #1781b4',borderRadius:'5px',paddingLeft:'5px'}}>
       {props.task} 
       <button onClick={removeNote} style={{position:'absolute',right:"0px",marginRight:"25%"}}>MARK COMPLETED</button>
     </p>
@@ -60,17 +69,22 @@ const TodoItem =(props)=>{
 // }
 
 function Todo() {
-  const [list,setList] = useState(null)
+  const [List,setList] = useState([])
   const [currNote,setCurr]=useState('')
-  const baseURL="http://127.0.0.1:5000/todos";
-  useEffect(() => {
-    axios.get(baseURL).then((response) => {
-      setList(response.data);
-      console.log(list)
-    });
-  }, );
+  
+  // useEffect(() => {
+  //   axios.get(baseURL).then((response) => {
+  //     setList(response.data);
+  //   });
+  // }, []);
+  axios.get(baseURL).then((response) => {
+    setList(response.data);
+  });
   const addNote=()=>{
     //add note to the api
+    const data = new FormData();
+    data.append("task",currNote);
+    makePostRequest(baseURL, data);
   }
   const controllCurr=(values)=>{
     setCurr(values)
@@ -84,7 +98,6 @@ function Todo() {
       <TodoForm curr={controllCurr} add={addNote} val={currNote}/>
       <TodoList list={List} handleDelete={removeList}/>
     </div>
-
   )
 }
 

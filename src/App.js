@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 import Activitylog from './Activitylog.js';
 import CalendarSchedule from './Calendar.js';
-import Project from './Project';
 import Home from './Home.js';
 import { TbListCheck } from "react-icons/tb";
 import { BsCalendarEvent} from "react-icons/bs";
@@ -36,9 +35,6 @@ function App() {
                 <Link to="/calendar"><BsCalendarEvent size='2rem'/></Link>
               </li>
               <li>
-                <Link to="/project"><AiOutlineDesktop size='2rem'/></Link>
-              </li>
-              <li>
                 <Link to="/log"><FiActivity size='2rem'/></Link>
               </li>
               </IconContext.Provider>
@@ -55,9 +51,6 @@ function App() {
           </Route>
           <Route path="/calendar">
             <CalendarSchedule />
-          </Route>
-          <Route path="/project">
-            <Project />
           </Route>
           <Route path="/log">
             <Activitylog />
